@@ -2,5 +2,9 @@
   "fmt": {
     "include": ["src/"],
     "exclude": ["src/routeTree.gen.ts"]
+  },
+  "lint": {
+    "include": ["src/"],
+    "exclude": ["src/routeTree.gen.ts"]
   }
 }

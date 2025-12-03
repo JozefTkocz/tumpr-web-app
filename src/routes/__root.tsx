@@ -14,21 +14,19 @@ const queryClient = new QueryClient();
 export const Route = createRootRoute({
   component: () => (
     <QueryClientProvider client={queryClient}>
-      <>
-        <Header />
-        <Outlet />
-        <TanStackDevtools
-          config={{
-            position: "bottom-right",
-          }}
-          plugins={[
-            {
-              name: "Tanstack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
-      </>
+      <Header />
+      <Outlet />
+      <TanStackDevtools
+        config={{
+          position: "bottom-right",
+        }}
+        plugins={[
+          {
+            name: "Tanstack Router",
+            render: <TanStackRouterDevtoolsPanel />,
+          },
+        ]}
+      />
     </QueryClientProvider>
   ),
 });

@@ -68,13 +68,13 @@ export function Pagination({
     <Box display="flex" flexDirection="row" gap={2}>
       <PageNavigationButton
         isActive={isPrevActive}
-        direction={"backwards"}
+        direction="backwards"
         onClick={decrementPage}
       />
       Page {currentPage} of {maxPages}
       <PageNavigationButton
         isActive={isNextActive}
-        direction={"forwards"}
+        direction="forwards"
         onClick={incrementPage}
       />
     </Box>

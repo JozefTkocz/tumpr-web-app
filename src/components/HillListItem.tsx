@@ -98,8 +98,8 @@ export function HillCardModel({
   onClose: () => void;
 }) {
   return (
-    <Box display={"flex"} flexDirection={"column"}>
-      <Box display={"flex"} flexDirection={"row"} justifyContent="flex-end">
+    <Box display="flex" flexDirection="column">
+      <Box display="flex" flexDirection="row" justifyContent="flex-end">
         <Button onClick={onClose}>
           <X size={24}></X>
         </Button>

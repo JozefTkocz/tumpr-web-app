@@ -66,72 +66,6 @@ function populateOptions(): Array<{ value: string; label: string }> {
 
 export const hillOptions = populateOptions();
 
-const hillClassificationsArray = [
-  "Ma",
-  "Ma=",
-  "Hu",
-  "Hu=",
-  "Tu",
-  "Sim",
-  "5",
-  "M",
-  "MT",
-  "F",
-  "C",
-  "G",
-  "D",
-  "DT",
-  "Hew",
-  "N",
-  "Dew",
-  "DDew",
-  "HF",
-  "4",
-  "3",
-  "2",
-  "1",
-  "0",
-  "W",
-  "WO",
-  "B",
-  "Sy",
-  "Fel",
-  "CoH",
-  "CoH=",
-  "CoU",
-  "CoU=",
-  "CoA",
-  "CoA=",
-  "CoL",
-  "CoL=",
-  "SIB",
-  "sMa",
-  "sHu",
-  "sSim",
-  "s5",
-  "s4",
-  "Mur",
-  "CT",
-  "GT",
-  "BL",
-  "Bg",
-  "Y",
-  "Cm",
-  "T100",
-  "xMT",
-  "xC",
-  "xG",
-  "xN",
-  "xDT",
-  "Dil",
-  "VL",
-  "A",
-  "Ca",
-  "Bin",
-  "O",
-  "Un",
-] as const;
-
 async function loadHillsDatabase(): Promise<Array<Hill>> {
   const response = await fetch(csvUrl);
   const arrayBuffer = await response.text();
@@ -287,11 +221,11 @@ export function HillsPage() {
       <Box
         display="flex"
         flexDirection="column"
-        alignSelf={"center"}
+        alignSelf="center"
         alignItems="center" // centers children horizontally
         gap={3} // nice spacing
         width="100%"
-        maxWidth={"400px"}
+        maxWidth="400px"
       >
         <Box
           width="100%"
