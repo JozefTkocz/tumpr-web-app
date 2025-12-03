@@ -1,0 +1,6 @@
+{
+  "fmt": {
+    "include": ["src/"],
+    "exclude": ["src/routeTree.gen.ts"]
+  }
+}
