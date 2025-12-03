@@ -1,13 +1,13 @@
-import { useState } from 'react'
+import { useState } from "react";
 
 export type Coordinate = {
-  latitude: number
-  longitude: number
-  altitude: number | null
-}
+  latitude: number;
+  longitude: number;
+  altitude: number | null;
+};
 
 export function useLocation() {
-  const [location, setLocation] = useState<Coordinate>()
+  const [location, setLocation] = useState<Coordinate>();
 
   const id = navigator.geolocation.watchPosition(
     (pos) =>
@@ -17,10 +17,10 @@ export function useLocation() {
         altitude: pos.coords.altitude,
       }),
     (err) => {
-      console.log(err)
+      console.log(err);
     },
     { enableHighAccuracy: true },
-  )
+  );
 
-  return { location, id }
+  return { location, id };
 }
