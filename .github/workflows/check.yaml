@@ -9,6 +9,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: denoland/setup-deno@v2
         with:
-          deno-version: v2.x # Run with latest stable Deno.
+          deno-version: v2.4.0 # Run with latest stable Deno.
       - run: deno fmt --check
       - run: deno lint
