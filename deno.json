@@ -1,10 +1,10 @@
 {
   "fmt": {
     "include": ["src/"],
-    "exclude": ["src/routeTree.gen.ts"]
+    "exclude": ["src/routeTree.gen.ts", "dev-dist/", "dist/"]
   },
   "lint": {
     "include": ["src/"],
-    "exclude": ["src/routeTree.gen.ts"]
+    "exclude": ["src/routeTree.gen.ts", "dev-dist/", "dist/"]
   }
 }
