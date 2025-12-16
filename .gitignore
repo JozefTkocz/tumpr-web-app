@@ -1,6 +1,7 @@
 node_modules
 .DS_Store
 dist
+dev-dist
 dist-ssr
 *.local
 count.txt
@@ -8,3 +9,4 @@ count.txt
 .nitro
 .tanstack
 .wrangler
+.vscode

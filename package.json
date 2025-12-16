@@ -9,7 +9,8 @@
     "test": "vitest run",
     "lint": "eslint",
     "format": "prettier",
-    "check": "prettier --write . && eslint --fix"
+    "check": "prettier --write . && eslint --fix",
+    "generate-pwa-assets": "pwa-assets-generator"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -25,6 +26,7 @@
     "@types/adm-zip": "^0.5.7",
     "@types/papaparse": "^5.3.16",
     "@types/react-modal": "^3.16.3",
+    "@vite-pwa/assets-generator": "^1.0.2",
     "adm-zip": "^0.5.16",
     "haversine-distance": "^1.2.4",
     "jszip": "^3.10.1",
