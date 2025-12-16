@@ -16,17 +16,6 @@ export const Route = createRootRoute({
     <QueryClientProvider client={queryClient}>
       <Header />
       <Outlet />
-      <TanStackDevtools
-        config={{
-          position: "bottom-right",
-        }}
-        plugins={[
-          {
-            name: "Tanstack Router",
-            render: <TanStackRouterDevtoolsPanel />,
-          },
-        ]}
-      />
     </QueryClientProvider>
   ),
 });
