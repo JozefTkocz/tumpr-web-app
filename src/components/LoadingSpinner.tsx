@@ -1,4 +1,4 @@
-import styles from './Loader.module.css'
+import styles from "./Loader.module.css";
 
 export function DataLoadingSpinner({ text }: { text: string | undefined }) {
   return (
@@ -6,5 +6,5 @@ export function DataLoadingSpinner({ text }: { text: string | undefined }) {
       {text}
       <span className={styles.loader}></span>
     </>
-  )
+  );
 }
