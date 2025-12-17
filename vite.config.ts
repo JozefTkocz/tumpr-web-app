@@ -28,8 +28,6 @@ export default defineConfig({
         'pwa-512x512.png',
         'maskable-icon-512x512.png',
         'public/data/DoBIH_v18_3.csv',
-        'TUMPr_logo_text.svg',
-        'TUMPr_logo.svg',
       ],
       manifestFilename: 'manifest.json',
       manifest: {
