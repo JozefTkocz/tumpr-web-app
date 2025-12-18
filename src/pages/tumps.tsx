@@ -209,7 +209,7 @@ function useHillData({
   // if we are within 20m of any of the nearby hills, auto-update the
   // bagged hills database.
   final?.forEach((hill) => {
-    if (hill.distance < 2000 && !hill.isBagged && canEdit) {
+    if (hill.distance < 20 && !hill.isBagged && canEdit) {
       markAsBagged(hill)
     }
   })
