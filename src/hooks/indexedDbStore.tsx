@@ -1,8 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useIndexedDb } from './indexDb.tsx'
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useIndexedDb } from "./indexDb.tsx";
 
 interface Addressable {
-  id: number
+  id: number;
 }
 
 export function useIndexDbStore<T extends Addressable>({
@@ -10,11 +10,11 @@ export function useIndexDbStore<T extends Addressable>({
   storeName,
   indices,
 }: {
-  queryKey: string
-  storeName: string
-  indices: Array<keyof T & string>
+  queryKey: string;
+  storeName: string;
+  indices: Array<keyof T & string>;
 }) {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const { indexedDb, isConnecting, isDbReady } = useIndexedDb(
     storeName,
     undefined,
@@ -22,65 +22,65 @@ export function useIndexDbStore<T extends Addressable>({
       upgrade(database) {
         if (!database.objectStoreNames.contains(storeName)) {
           const objectStore = database.createObjectStore(storeName, {
-            keyPath: 'id',
-          })
+            keyPath: "id",
+          });
 
           indices.forEach((index) => {
-            objectStore.createIndex(index, index, { unique: false })
-          })
+            objectStore.createIndex(index, index, { unique: false });
+          });
         }
       },
     },
-  )
+  );
 
   const { data, isLoading } = useQuery<Array<T>>({
     queryKey: [queryKey],
     queryFn: async () => {
       try {
         if (!indexedDb) {
-          return []
+          return [];
         }
         const queryResult = (await indexedDb.getAll(storeName)) as
           | Array<T>
-          | undefined
-        return queryResult || []
+          | undefined;
+        return queryResult || [];
       } catch (error) {
-        console.error(error)
-        throw error
+        console.error(error);
+        throw error;
       }
     },
     enabled: isDbReady,
-  })
+  });
 
   const { mutateAsync: addObject, isPending: isAddPending } = useMutation({
     mutationFn: async (object: T) => {
       if (!indexedDb) {
-        throw new Error(`${storeName} NOT READY`)
+        throw new Error(`${storeName} NOT READY`);
       }
-      await indexedDb.add(storeName, object)
+      await indexedDb.add(storeName, object);
     },
     onSuccess() {
       queryClient.invalidateQueries({
         queryKey: [queryKey],
-      })
+      });
     },
-  })
+  });
 
   const { mutateAsync: deleteObject, isPending: isDeletePending } = useMutation(
     {
       mutationFn: async (object: T) => {
         if (!indexedDb) {
-          throw new Error(`${storeName} NOT READY`)
+          throw new Error(`${storeName} NOT READY`);
         }
-        await indexedDb.delete(storeName, object.id)
+        await indexedDb.delete(storeName, object.id);
       },
       onSuccess() {
         queryClient.invalidateQueries({
           queryKey: [queryKey],
-        })
+        });
       },
     },
-  )
+  );
 
   return {
     indexedDb,
@@ -91,5 +91,5 @@ export function useIndexDbStore<T extends Addressable>({
     isAddPending,
     deleteObject,
     isDeletePending,
-  }
+  };
 }
