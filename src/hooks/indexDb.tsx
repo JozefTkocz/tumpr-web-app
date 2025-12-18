@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query'
-import { openDB } from 'idb'
-import type { DBSchema, OpenDBCallbacks } from 'idb'
+import { useQuery } from "@tanstack/react-query";
+import { openDB } from "idb";
+import type { DBSchema, OpenDBCallbacks } from "idb";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const useIndexedDb = <DBTypes extends DBSchema | unknown = unknown>(
@@ -13,22 +13,22 @@ export const useIndexedDb = <DBTypes extends DBSchema | unknown = unknown>(
     isLoading: isConnecting,
     isSuccess: isDbReady,
   } = useQuery({
-    queryKey: ['indexed-db'],
+    queryKey: ["indexed-db"],
     queryFn: async () => {
       try {
-        const db = await openDB(name, version, config)
-        return db
+        const db = await openDB(name, version, config);
+        return db;
       } catch (error) {
-        console.error(error)
-        throw error
+        console.error(error);
+        throw error;
       }
     },
     staleTime: Infinity,
-  })
+  });
 
   return {
     indexedDb,
     isConnecting,
     isDbReady,
-  }
-}
+  };
+};

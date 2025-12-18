@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { Box, Button, Switch, ToggleButton } from '@mui/material'
+import { Box, Button, Switch } from '@mui/material'
 import Modal from 'react-modal'
-import { CheckIcon, X } from 'lucide-react'
 import type { Hill } from '@/pages/tumps'
 
 function roundToDecimalPlaces(arg: number, n: number) {

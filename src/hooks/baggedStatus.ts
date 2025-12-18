@@ -1,6 +1,6 @@
 // import { useEffect, useState } from 'react'
-import { useIndexDbStore } from './indexedDbStore.tsx'
-import type { Hill } from '../pages/tumps.tsx'
+import { useIndexDbStore } from "./indexedDbStore.tsx";
+import type { Hill } from "../pages/tumps.tsx";
 
 export function useBaggedStatus() {
   const {
@@ -12,20 +12,20 @@ export function useBaggedStatus() {
     isDeletePending,
     isReady,
   } = useIndexDbStore<{
-    id: number
+    id: number;
   }>({
-    queryKey: 'bagged-status',
-    storeName: 'bagged-status',
+    queryKey: "bagged-status",
+    storeName: "bagged-status",
     indices: [],
-  })
+  });
 
   const markAsBagged = (hill: Hill) => {
-    addObject({ id: hill.Number })
-  }
+    addObject({ id: hill.Number });
+  };
 
   const markAsNotBagged = (hill: Hill) => {
-    deleteObject({ id: hill.Number })
-  }
+    deleteObject({ id: hill.Number });
+  };
 
   return {
     data,
@@ -34,5 +34,5 @@ export function useBaggedStatus() {
     canEdit: !isAddPending && !isDeletePending && isReady,
     markAsBagged,
     markAsNotBagged,
-  }
+  };
 }

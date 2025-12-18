@@ -19,7 +19,7 @@ export function useIndexDbStore<T extends Addressable>({
     storeName,
     undefined,
     {
-      async upgrade(database) {
+      upgrade(database) {
         if (!database.objectStoreNames.contains(storeName)) {
           const objectStore = database.createObjectStore(storeName, {
             keyPath: 'id',
