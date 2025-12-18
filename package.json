@@ -29,6 +29,7 @@
     "@vite-pwa/assets-generator": "^1.0.2",
     "adm-zip": "^0.5.16",
     "haversine-distance": "^1.2.4",
+    "idb": "^8.0.3",
     "jszip": "^3.10.1",
     "lucide-react": "^0.545.0",
     "papaparse": "^5.5.3",
