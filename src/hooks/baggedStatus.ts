@@ -3,22 +3,21 @@ import { useIndexDbStore } from './indexedDbStore.tsx'
 import type { Hill } from '../pages/tumps.tsx'
 
 export function useBaggedStatus() {
-  //   const [baggedHills, setBaggedHills] = useState<Array<number>>()
-
-  const { data, isLoading, addObject, deleteObject, isReady } =
-    useIndexDbStore<{
-      id: number
-    }>({
-      queryKey: 'bagged-status',
-      storeName: 'bagged-status',
-      indices: [],
-    })
-
-  //   useEffect(() => {
-  //     if (data) {
-  //       setBaggedHills(data.map((d) => d.id))
-  //     }
-  //   })
+  const {
+    data,
+    isLoading,
+    addObject,
+    isAddPending,
+    deleteObject,
+    isDeletePending,
+    isReady,
+  } = useIndexDbStore<{
+    id: number
+  }>({
+    queryKey: 'bagged-status',
+    storeName: 'bagged-status',
+    indices: [],
+  })
 
   const markAsBagged = (hill: Hill) => {
     addObject({ id: hill.Number })
@@ -32,6 +31,7 @@ export function useBaggedStatus() {
     data,
     isLoading,
     isReady,
+    canEdit: !isAddPending && !isDeletePending && isReady,
     markAsBagged,
     markAsNotBagged,
   }

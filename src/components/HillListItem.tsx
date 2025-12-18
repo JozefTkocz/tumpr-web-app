@@ -110,7 +110,6 @@ export function HillCardModel({
   onClose: () => void
   setIsBagged: (arg: boolean) => void
 }) {
-  console.log(hill.Name, hill.isBagged)
   return (
     <Box display="flex" flexDirection="column">
       <Box display="flex" flexDirection="row" justifyContent="flex-end">
