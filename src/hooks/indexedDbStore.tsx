@@ -57,7 +57,25 @@ export function useIndexDbStore<T extends Addressable>({
       if (!indexedDb) {
         throw new Error(`${storeName} NOT READY`);
       }
-      await indexedDb.add(storeName, object);
+      await indexedDb.put(storeName, object);
+    },
+    onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: [queryKey],
+      });
+    },
+  });
+
+  const { mutateAsync: addMany, isPending: isAddManyPending } = useMutation({
+    mutationFn: async (objects: Array<T>) => {
+      if (!indexedDb) {
+        throw new Error(`${storeName} NOT READY`);
+      }
+      {
+        const tx = indexedDb.transaction(storeName, "readwrite");
+        const transactions = objects.map((o) => tx.store.put(o), tx.done);
+        await Promise.all(transactions);
+      }
     },
     onSuccess() {
       queryClient.invalidateQueries({
@@ -91,5 +109,7 @@ export function useIndexDbStore<T extends Addressable>({
     isAddPending,
     deleteObject,
     isDeletePending,
+    addMany,
+    isAddManyPending,
   };
 }

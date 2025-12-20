@@ -7,7 +7,7 @@ import Header from "../components/Header";
 Modal.setAppElement("#app"); // Or whatever your root element’s ID is
 
 // Create a client
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 export const Route = createRootRoute({
   component: () => (

@@ -11,6 +11,8 @@ export function useBaggedStatus() {
     deleteObject,
     isDeletePending,
     isReady,
+    addMany,
+    isAddManyPending,
   } = useIndexDbStore<{
     id: number;
   }>({
@@ -27,12 +29,17 @@ export function useBaggedStatus() {
     deleteObject({ id: hill.Number });
   };
 
+  const bulkMarkAsBagged = (hillIds: Array<{ id: number }>) => {
+    addMany(hillIds);
+  };
+
   return {
     data,
     isLoading,
     isReady,
-    canEdit: !isAddPending && !isDeletePending && isReady,
+    canEdit: !isAddPending && !isDeletePending && !isAddManyPending && isReady,
     markAsBagged,
     markAsNotBagged,
+    bulkMarkAsBagged,
   };
 }

@@ -4,7 +4,7 @@ import haversineDistance from "haversine-distance";
 
 import Select from "@mui/material/Select";
 import Papa from "papaparse";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import MenuItem from "@mui/material/MenuItem";
 import type { SelectChangeEvent } from "@mui/material/Select";
 
@@ -71,7 +71,7 @@ function populateOptions(): Array<{ value: string; label: string }> {
 
 export const hillOptions = populateOptions();
 
-async function loadHillsDatabase(): Promise<Array<Hill>> {
+export async function loadHillsDatabase(): Promise<Array<Hill>> {
   const response = await fetch(csvUrl);
   const arrayBuffer = await response.text();
   const hillsData = Papa.parse(arrayBuffer, {
@@ -145,7 +145,7 @@ function useHillData({
   isLoading: boolean;
   maxItems: number | undefined;
 } {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading } = useSuspenseQuery({
     queryKey: ["database"],
     queryFn: loadHillsDatabase,
   });
@@ -236,13 +236,13 @@ export function HillsList({
   markAsBagged: (hill: Hill) => void;
   markAsNotBagged: (hill: Hill) => void;
 }) {
-  if (isLoading) {
+  if (isLoading || !data || data.length === 0) {
     return <DataLoadingSpinner text="Loading data" />;
   }
 
   return (
     <>
-      {data?.map((hill) => {
+      {data.map((hill) => {
         return (
           <HillListItem
             key={hill.Name}

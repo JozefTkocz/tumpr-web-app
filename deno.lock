@@ -38,7 +38,8 @@
     "npm:vite-plugin-pwa@^1.2.0": "1.2.0_@vite-pwa+assets-generator@1.0.2_vite@7.1.12__@types+node@22.18.12__picomatch@4.0.3_workbox-build@7.4.0__ajv@8.17.1__@babel+core@7.28.5__rollup@2.79.2_workbox-window@7.4.0_@types+node@22.18.12",
     "npm:vite@^7.1.7": "7.1.12_@types+node@22.18.12_picomatch@4.0.3",
     "npm:vitest@^3.0.5": "3.2.4_@types+node@22.18.12_jsdom@27.0.1_vite@7.1.12__@types+node@22.18.12__picomatch@4.0.3",
-    "npm:web-vitals@^5.1.0": "5.1.0"
+    "npm:web-vitals@^5.1.0": "5.1.0",
+    "npm:zod@^4.2.1": "4.2.1"
   },
   "npm": {
     "@apideck/better-ajv-errors@0.3.6_ajv@8.17.1": {
@@ -2059,7 +2060,7 @@
         "recast",
         "source-map@0.7.6",
         "tsx",
-        "zod"
+        "zod@3.25.76"
       ]
     },
     "@tanstack/router-plugin@1.133.27_@tanstack+react-router@1.133.27__react@19.2.0__react-dom@19.2.0___react@19.2.0_vite@7.1.12__@types+node@22.18.12__picomatch@4.0.3_@babel+core@7.28.5_react@19.2.0_react-dom@19.2.0__react@19.2.0_@types+node@22.18.12": {
@@ -2080,7 +2081,7 @@
         "chokidar",
         "unplugin",
         "vite",
-        "zod"
+        "zod@3.25.76"
       ],
       "optionalPeers": [
         "@tanstack/react-router",
@@ -5640,6 +5641,9 @@
     },
     "zod@3.25.76": {
       "integrity": "sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ=="
+    },
+    "zod@4.2.1": {
+      "integrity": "sha512-0wZ1IRqGGhMP76gLqz8EyfBXKk0J2qo2+H3fi4mcUP/KtTocoX08nmIAHl1Z2kJIZbZee8KOpBCSNPRgauucjw=="
     }
   },
   "workspace": {
@@ -5682,7 +5686,8 @@
         "npm:vite-plugin-pwa@^1.2.0",
         "npm:vite@^7.1.7",
         "npm:vitest@^3.0.5",
-        "npm:web-vitals@^5.1.0"
+        "npm:web-vitals@^5.1.0",
+        "npm:zod@^4.2.1"
       ]
     }
   }

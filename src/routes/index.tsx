@@ -1,10 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { loadHillsDatabase } from "../pages/tumps.tsx";
 import { HillsPage } from "@/pages/tumps";
 
 export const Route = createFileRoute("/")({
-  component: App,
+  component: HillsPage,
+  loader: ({ context }) =>
+    context.queryClient.ensureQueryData({
+      queryKey: ["database"],
+      queryFn: loadHillsDatabase,
+    }),
 });
-
-function App() {
-  return <HillsPage />;
-}
