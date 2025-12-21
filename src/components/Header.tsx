@@ -1,10 +1,10 @@
-import { Link } from '@tanstack/react-router'
-import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
-import logo from '../assets/TUMPr_logo_text.svg'
+import { Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import logo from "../assets/TUMPr_logo_text.svg";
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -26,7 +26,7 @@ export default function Header() {
 
       <aside
         className={`fixed top-0 left-0 h-full w-80 bg-gray-900 text-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
+          isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
@@ -48,7 +48,7 @@ export default function Header() {
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
             activeProps={{
               className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+                "flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
             }}
           >
             <span className="font-medium">TUMPs</span>
@@ -60,7 +60,7 @@ export default function Header() {
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
             activeProps={{
               className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+                "flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
             }}
           >
             <span className="font-medium">Data Management</span>
@@ -72,7 +72,7 @@ export default function Header() {
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
             activeProps={{
               className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+                "flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
             }}
           >
             <span className="font-medium">Strava Data Import</span>
@@ -84,7 +84,7 @@ export default function Header() {
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
             activeProps={{
               className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+                "flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
             }}
           >
             <span className="font-medium">About</span>
@@ -92,5 +92,5 @@ export default function Header() {
         </nav>
       </aside>
     </>
-  )
+  );
 }
