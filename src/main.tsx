@@ -9,10 +9,16 @@ import "./styles.css";
 import reportWebVitals from "./reportWebVitals.ts";
 import { queryClient } from "./routes/__root.tsx";
 
+import type { QueryClient } from "@tanstack/react-query";
+
+export interface RouterContext {
+  queryClient: QueryClient;
+}
+
 // Create a new router instance
 const router = createRouter({
   routeTree,
-  context: { queryClient },
+  context: { queryClient } satisfies RouterContext,
   defaultPreload: "intent",
   scrollRestoration: true,
   defaultStructuralSharing: true,

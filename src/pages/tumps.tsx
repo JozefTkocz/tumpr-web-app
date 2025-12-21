@@ -6,13 +6,13 @@ import Select from "@mui/material/Select";
 import Papa from "papaparse";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import MenuItem from "@mui/material/MenuItem";
-import type { SelectChangeEvent } from "@mui/material/Select";
-
-import { HillListItem } from "@/components/HillListItem";
-import { DataLoadingSpinner } from "@/components/LoadingSpinner";
-import { Pagination } from "@/components/PageNavigator";
-import { useLocation } from "@/hooks/location";
+import { HillListItem } from "../components/HillListItem.tsx";
 import { useBaggedStatus } from "../hooks/baggedStatus.ts";
+
+import { DataLoadingSpinner } from "../components/LoadingSpinner.tsx";
+import { Pagination } from "../components/PageNavigator.tsx";
+import { useLocation } from "../hooks/location.tsx";
+import type { SelectChangeEvent } from "@mui/material/Select";
 
 const csvUrl = `${import.meta.env.BASE_URL}data/DoBIH_v18_3.csv`;
 const PAGINATION_CONSTANT = 5;
@@ -167,7 +167,7 @@ function useHillData({
     distance: number;
   };
 
-  const distances: Array<SortPosition> | undefined = location &&
+  const distances: Array<SortPosition> | undefined | null = location &&
     hillsOfClassification &&
     hillsOfClassification.map((hill, idx) => {
       const distance = haversineDistance(location, {

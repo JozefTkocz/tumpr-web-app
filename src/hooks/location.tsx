@@ -6,12 +6,17 @@ export type Coordinate = {
   altitude: number | null;
 };
 
-export function useLocation() {
+export function useLocation(): {
+  location: Coordinate | undefined;
+  id: number;
+} {
   const cachedLocationString = globalThis.sessionStorage.getItem("location");
   const cachedLocation = cachedLocationString
     ? (JSON.parse(cachedLocationString) as Coordinate)
-    : null;
-  const [location, setLocation] = useState<Coordinate | null>(cachedLocation);
+    : undefined;
+  const [location, setLocation] = useState<Coordinate | undefined>(
+    cachedLocation,
+  );
   const setLocationAndUpdateCache = (coordinate: Coordinate) => {
     setLocation(coordinate);
     globalThis.sessionStorage.setItem("location", JSON.stringify(coordinate));
