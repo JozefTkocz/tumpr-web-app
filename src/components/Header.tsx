@@ -1,7 +1,9 @@
 import { Link } from "@tanstack/react-router";
-
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Route as StravaRoute } from "../routes/strava-data-import.tsx";
+import { Route as MyDataRoute } from "../routes/my-data.tsx";
+import { Route as AboutRoute } from "../routes/about.tsx";
 import logo from "../assets/TUMPr_logo_text.svg";
 
 export default function Header() {
@@ -56,7 +58,7 @@ export default function Header() {
           </Link>
 
           <Link
-            to="/my-data"
+            to={MyDataRoute.to}
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
             activeProps={{
@@ -68,7 +70,7 @@ export default function Header() {
           </Link>
 
           <Link
-            to="/strava-data-import"
+            to={StravaRoute.to}
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
             activeProps={{
@@ -80,7 +82,7 @@ export default function Header() {
           </Link>
 
           <Link
-            to="/about"
+            to={AboutRoute.to}
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
             activeProps={{
