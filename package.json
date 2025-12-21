@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 3000",
-    "routes": "tanstack-router generate",
+    "routes": "deno run -A npm:@tanstack/router-cli generate",
     "build": "deno task routes && vite build && tsc",
     "serve": "vite preview",
     "test": "vitest run",
@@ -23,6 +23,7 @@
     "@tanstack/react-query": "^5.90.5",
     "@tanstack/react-router": "^1.132.0",
     "@tanstack/react-router-devtools": "^1.132.0",
+    "@tanstack/router-cli": "^1.142.7",
     "@tanstack/router-plugin": "^1.132.0",
     "@types/adm-zip": "^0.5.7",
     "@types/papaparse": "^5.3.16",
