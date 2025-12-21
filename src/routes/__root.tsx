@@ -1,7 +1,7 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Modal from "react-modal";
-import Header from "../components/Header";
+import Header from "../components/Header.tsx";
 
 // This tells react-modal which part of your app to hide when the modal is open
 Modal.setAppElement("#app"); // Or whatever your root element’s ID is

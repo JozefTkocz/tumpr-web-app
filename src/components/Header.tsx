@@ -43,7 +43,7 @@ export default function Header() {
 
         <nav className="flex-1 p-4 overflow-y-auto">
           <Link
-            to="/"
+            to={`${import.meta.env.BASE_URL}`}
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
             activeProps={{
@@ -55,7 +55,7 @@ export default function Header() {
           </Link>
 
           <Link
-            to="/my-data"
+            to={`${import.meta.env.BASE_URL}my-data`}
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
             activeProps={{
@@ -67,7 +67,7 @@ export default function Header() {
           </Link>
 
           <Link
-            to="/strava-data-import"
+            to={`${import.meta.env.BASE_URL}strava-data-import`}
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
             activeProps={{
@@ -79,7 +79,7 @@ export default function Header() {
           </Link>
 
           <Link
-            to="/about"
+            to={`${import.meta.env.BASE_URL}about`}
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
             activeProps={{
