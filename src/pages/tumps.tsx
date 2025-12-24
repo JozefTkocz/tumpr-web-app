@@ -260,7 +260,7 @@ export function HillsList({
 export function HillsPage() {
   const [hillClassification, setHillClassification] = useState("Tu");
   const [pagePointer, setPagePointer] = useState<number>(0);
-  const { location } = useLocation();
+  const { location, hasPermission } = useLocation();
 
   const handleChange = (event: SelectChangeEvent) => {
     setHillClassification(event.target.value);
@@ -275,6 +275,13 @@ export function HillsPage() {
       itemsPerPage: PAGINATION_CONSTANT,
     });
 
+  if (!hasPermission) {
+    return <span>You must enable location in your browser to use TUMPr</span>;
+  }
+
+  if (!location) {
+    return <DataLoadingSpinner text="Waiting to get location..." />;
+  }
   return (
     <Box display="flex" flexDirection="column" paddingTop={8}>
       <Box

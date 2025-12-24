@@ -23,6 +23,7 @@
     "@tanstack/react-router": "^1.132.0",
     "@tanstack/react-router-devtools": "^1.132.0",
     "@tanstack/router-plugin": "^1.132.0",
+    "@tanstack/zod-adapter": "^1.142.11",
     "@types/adm-zip": "^0.5.7",
     "@types/papaparse": "^5.3.16",
     "@types/react-modal": "^3.16.3",

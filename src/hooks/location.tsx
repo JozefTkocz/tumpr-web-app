@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type Coordinate = {
   latitude: number;
@@ -9,6 +9,7 @@ export type Coordinate = {
 export function useLocation(): {
   location: Coordinate | undefined;
   id: number;
+  hasPermission: boolean;
 } {
   const cachedLocationString = globalThis.sessionStorage.getItem("location");
   const cachedLocation = cachedLocationString
@@ -17,6 +18,16 @@ export function useLocation(): {
   const [location, setLocation] = useState<Coordinate | undefined>(
     cachedLocation,
   );
+  const [hasPermission, setHasPermission] = useState(false);
+
+  useEffect(() => {
+    navigator.permissions.query({ name: "geolocation" }).then((result) => {
+      result.state === "denied"
+        ? setHasPermission(false)
+        : setHasPermission(true);
+    });
+  });
+
   const setLocationAndUpdateCache = (coordinate: Coordinate) => {
     setLocation(coordinate);
     globalThis.sessionStorage.setItem("location", JSON.stringify(coordinate));
@@ -35,5 +46,5 @@ export function useLocation(): {
     { enableHighAccuracy: true },
   );
 
-  return { location, id };
+  return { location, id, hasPermission };
 }

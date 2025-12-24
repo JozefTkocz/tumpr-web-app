@@ -5,6 +5,11 @@
   },
   "lint": {
     "include": ["src/"],
-    "exclude": ["src/routeTree.gen.ts", "dev-dist/", "dist/"]
+    "exclude": [
+      "src/routeTree.gen.ts",
+      "dev-dist/",
+      "dist/",
+      "src/strava/Api.ts"
+    ]
   }
 }

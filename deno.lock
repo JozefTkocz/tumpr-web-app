@@ -12,6 +12,7 @@
     "npm:@tanstack/react-router-devtools@^1.132.0": "1.142.7_@tanstack+react-router@1.142.7__react@19.2.3__react-dom@19.2.3___react@19.2.3_react@19.2.3_react-dom@19.2.3__react@19.2.3",
     "npm:@tanstack/react-router@^1.132.0": "1.142.7_react@19.2.3_react-dom@19.2.3__react@19.2.3",
     "npm:@tanstack/router-plugin@^1.132.0": "1.142.7_@tanstack+react-router@1.142.7__react@19.2.3__react-dom@19.2.3___react@19.2.3_vite@7.3.0__@types+node@22.19.3__picomatch@4.0.3_@babel+core@7.28.5_react@19.2.3_react-dom@19.2.3__react@19.2.3_@types+node@22.19.3",
+    "npm:@tanstack/zod-adapter@^1.142.11": "1.142.11_@tanstack+react-router@1.142.7__react@19.2.3__react-dom@19.2.3___react@19.2.3_zod@4.2.1_react@19.2.3_react-dom@19.2.3__react@19.2.3",
     "npm:@testing-library/dom@^10.4.0": "10.4.1",
     "npm:@testing-library/react@^16.2.0": "16.3.1_@testing-library+dom@10.4.1_@types+react@19.2.7_@types+react-dom@19.2.3__@types+react@19.2.7_react@19.2.3_react-dom@19.2.3__react@19.2.3",
     "npm:@types/adm-zip@~0.5.7": "0.5.7",
@@ -2088,6 +2089,13 @@
     },
     "@tanstack/virtual-file-routes@1.141.0": {
       "integrity": "sha512-CJrWtr6L9TVzEImm9S7dQINx+xJcYP/aDkIi6gnaWtIgbZs1pnzsE0yJc2noqXZ+yAOqLx3TBGpBEs9tS0P9/A=="
+    },
+    "@tanstack/zod-adapter@1.142.11_@tanstack+react-router@1.142.7__react@19.2.3__react-dom@19.2.3___react@19.2.3_zod@4.2.1_react@19.2.3_react-dom@19.2.3__react@19.2.3": {
+      "integrity": "sha512-QRoqX+GNUp1quaxxuxAVpZLFHXNyNsLB1Yd38F73ZAbEEnp5HmefWDi7Wz9LhLUxQmvZHn2AzBCP9uX0mJSIjg==",
+      "dependencies": [
+        "@tanstack/react-router",
+        "zod@4.2.1"
+      ]
     },
     "@testing-library/dom@10.4.1": {
       "integrity": "sha512-o4PXJQidqJl82ckFaXUeoAW+XysPLauYI43Abki5hABd853iMhitooc6znOnczgbTYmEP6U6/y1ZyKAIsvMKGg==",
@@ -5566,6 +5574,7 @@
         "npm:@tanstack/react-router-devtools@^1.132.0",
         "npm:@tanstack/react-router@^1.132.0",
         "npm:@tanstack/router-plugin@^1.132.0",
+        "npm:@tanstack/zod-adapter@^1.142.11",
         "npm:@testing-library/dom@^10.4.0",
         "npm:@testing-library/react@^16.2.0",
         "npm:@types/adm-zip@~0.5.7",
