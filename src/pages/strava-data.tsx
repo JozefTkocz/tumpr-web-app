@@ -212,7 +212,7 @@ export function Authorize() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          redirectUrl: globalThis.location.origin + "/#/strava-data-import",
+          redirectUrl: globalThis.location.origin + "/strava-data-import",
         }),
       })
         .then(async (r) => await r.text())
