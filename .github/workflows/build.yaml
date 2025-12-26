@@ -13,7 +13,7 @@ jobs:
         with:
           deno-version: v2.4.0 # Run with latest stable Deno
       - run: deno install
-      - run: deno task build --mode production
+      - run: deno task build
         env:
           VITE_BACKEND_URL: https://tumpr-694124923312.europe-west2.run.app
 
