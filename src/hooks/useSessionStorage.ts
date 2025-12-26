@@ -16,6 +16,7 @@ export function useSessionStorage({
   return {
     value,
     setValue: (value: string) => globalThis.sessionStorage.setItem(key, value),
+    clearValue: () => globalThis.sessionStorage.removeItem(key),
   };
 }
 
@@ -26,7 +27,7 @@ export function useSessionObjectStorage<T>({
   key: string;
   initialValue?: T;
 }) {
-  const { value, setValue } = useSessionStorage({
+  const { value, setValue, clearValue } = useSessionStorage({
     key,
     initialValue: initialValue ? JSON.stringify(initialValue) : undefined,
   });
@@ -35,5 +36,6 @@ export function useSessionObjectStorage<T>({
   return {
     value: object,
     setValue: setObject,
+    clearValue,
   };
 }

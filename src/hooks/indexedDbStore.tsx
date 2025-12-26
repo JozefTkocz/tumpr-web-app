@@ -73,8 +73,11 @@ export function useIndexDbStore<T extends Addressable>({
       }
       {
         const tx = indexedDb.transaction(storeName, "readwrite");
-        const transactions = objects.map((o) => tx.store.put(o), tx.done);
-        await Promise.all(transactions);
+        objects.forEach((o) => {
+          tx.store.put(o);
+        });
+
+        await tx.done;
       }
     },
     onSuccess() {
@@ -86,7 +89,7 @@ export function useIndexDbStore<T extends Addressable>({
 
   const { mutateAsync: deleteObject, isPending: isDeletePending } = useMutation(
     {
-      mutationFn: async (object: T) => {
+      mutationFn: async (object: Addressable) => {
         if (!indexedDb) {
           throw new Error(`${storeName} NOT READY`);
         }

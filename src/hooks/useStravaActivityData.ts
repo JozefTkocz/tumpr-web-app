@@ -1,11 +1,50 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useSessionObjectStorage } from "./useSessionStorage.ts";
 import { useIndexDbStore } from "./indexedDbStore.tsx";
 import type { SummaryActivity } from "../strava/Api.ts";
+import type { Result } from "../common/result.ts";
+
+const STRAVA_DATA_KEYS = {
+  SUMMARY_ACTIVITIES: 0,
+};
+
+async function queryStravaHistory(
+  token: string | null | undefined,
+): Promise<Result<Array<SummaryActivity>>> {
+  if (token) {
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/map-data`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token,
+        }),
+      },
+    );
+    if (response.ok) {
+      const data = (await response.json()) as Array<SummaryActivity>;
+      return { ok: data, error: null };
+    } else if (response.status === 429) {
+      return { ok: null, error: new Error("Strava rate limit exceeded") };
+    } else {
+      return { ok: null, error: new Error(response.statusText) };
+    }
+  } else {
+    return { ok: null, error: new Error("Invalid token") };
+  }
+}
 
 export function useStravaActivityHistory() {
-  const { data, addObject } = useIndexDbStore<{
+  const {
+    data: localData,
+    isReady,
+    addObject,
+    deleteObject,
+  } = useIndexDbStore<{
     id: number;
     data: Array<SummaryActivity>;
   }>({
@@ -14,37 +53,38 @@ export function useStravaActivityHistory() {
     indices: [],
   });
 
+  const hasLocalData = localData !== undefined && localData.length > 0;
+
   const { token } = useStravaAuthToken();
   const { data: requestData, isLoading } = useQuery({
     queryKey: ["map-data", token],
-    queryFn: async () => {
-      if (token) {
-        return await fetch(`${import.meta.env.VITE_BACKEND_URL}/map-data`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            token,
-          }),
-        })
-          .then(async (r) => await r.text())
-          .then((s) => JSON.parse(s) as Array<SummaryActivity>);
-      } else {
-        return undefined;
-      }
-    },
+    queryFn: () => queryStravaHistory(token),
+    enabled: isReady === true && token !== null && !hasLocalData,
   });
 
   useEffect(() => {
-    if (!data && requestData) {
-      addObject({ id: 0, data: requestData });
+    if (requestData?.error) {
+      throw requestData.error;
     }
-  }, [data, requestData]);
+    if (requestData) {
+      addObject({
+        id: STRAVA_DATA_KEYS.SUMMARY_ACTIVITIES,
+        data: requestData.ok,
+      });
+    }
+  }, [requestData, addObject]);
+
+  const resolvedData = useMemo(
+    () => (localData && localData.length ? localData[0].data : requestData?.ok),
+    [localData, requestData],
+  );
+  const clearAll = () =>
+    deleteObject({ id: STRAVA_DATA_KEYS.SUMMARY_ACTIVITIES });
 
   return {
-    data,
-    isLoading,
+    data: resolvedData,
+    isLoading: isLoading || !isReady,
+    clearAll,
   };
 }
 
@@ -52,41 +92,44 @@ export function useStravaAuthToken() {
   const searchParams = new URLSearchParams(globalThis.location.search);
   const code = searchParams.get("code");
 
-  const { value: token, setValue: setToken } = useSessionObjectStorage<string>({
+  const {
+    value: token,
+    setValue: setToken,
+    clearValue: clearToken,
+  } = useSessionObjectStorage<string>({
     key: "strava_auth_token",
   });
 
   const { data } = useQuery({
-    queryKey: ["authToken", code, token],
+    queryKey: ["authToken", code],
+    enabled: !token && code !== null,
     queryFn: async () => {
-      if (!code && !token) {
-        return null;
-      } else if (!token && code) {
-        const newToken = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/token`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              code,
-            }),
+      const newToken = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/token`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        )
-          .then(async (r) => await r.text())
-          .then((s) => JSON.parse(s) as { token: { access_token: string } });
-        setToken(newToken.token.access_token);
-        return newToken.token.access_token;
-      } else if (token) {
-        return token;
-      } else {
-        return null;
-      }
+          body: JSON.stringify({
+            code,
+          }),
+        },
+      )
+        .then(async (r) => await r.text())
+        .then((s) => JSON.parse(s) as { token: { access_token: string } });
+      return newToken.token.access_token;
     },
   });
 
+  useEffect(() => {
+    if (data) {
+      setToken(data);
+    }
+  }, [data, setToken]);
+
   return {
-    token: data,
+    token,
+    clearToken,
   };
 }

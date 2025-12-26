@@ -56,7 +56,7 @@ function useParseJSONFile<T>(schema: z.ZodType<T>) {
 }
 
 export function MyData() {
-  const { data, bulkMarkAsBagged } = useBaggedStatus();
+  const { data, bulkMarkAsBagged, isReady } = useBaggedStatus();
 
   const { fileData, setFile } = useParseJSONFile(databaseSchema);
   useEffect(() => {
@@ -75,7 +75,7 @@ export function MyData() {
       alignContent="center"
     >
       <p>{explanationText}</p>
-      {data
+      {isReady
         ? (
           <Button
             href={`data:text/json;charset=utf-8,${

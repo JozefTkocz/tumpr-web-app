@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { HillsPage, loadHillsDatabase } from "../pages/tumps.tsx";
+import { HillsPage } from "../pages/tumps.tsx";
+import { loadHillsDatabase } from "../hooks/useHillData.tsx";
 
 export const Route = createFileRoute("/")({
   component: HillsPage,
