@@ -24,7 +24,7 @@ const schemaUpgrades: Record<string, OpenDBCallbacks<unknown>> = {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const useIndexedDb = <DBTypes extends DBSchema | unknown = unknown>(
-  name: DatabaseTable,
+  name: string,
   _version?: number, // ignored on purpose
   _config?: OpenDBCallbacks<DBTypes>, // ignored on purpose
 ) => {
