@@ -2,12 +2,10 @@ import { openDB } from "idb";
 import { useQuery } from "@tanstack/react-query";
 import type { DBSchema, OpenDBCallbacks } from "idb";
 
-type DatabaseTable = "bagged-status" | "strava-data";
-
 const DB_VERSION = 1;
 
 // Centralized schema definition
-const schemaUpgrades: Record<DatabaseTable, OpenDBCallbacks<unknown>> = {
+const schemaUpgrades: Record<string, OpenDBCallbacks<unknown>> = {
   "bagged-status": {
     upgrade(db) {
       if (!db.objectStoreNames.contains("bagged-status")) {

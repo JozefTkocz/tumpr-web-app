@@ -1,6 +1,6 @@
 // import { useEffect, useState } from 'react'
 import { useIndexDbStore } from "./indexedDbStore.tsx";
-import type { Hill } from "../pages/tumps.tsx";
+import type { Hill } from "./useHillData.tsx";
 
 export function useBaggedStatus() {
   const {

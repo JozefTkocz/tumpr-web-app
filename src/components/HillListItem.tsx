@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, Button, Switch } from "@mui/material";
 import Modal from "react-modal";
 import { X } from "lucide-react";
-import type { Hill } from "../pages/tumps.tsx";
+import type { Hill } from "../hooks/useHillData.tsx";
 
 function roundToDecimalPlaces(arg: number, n: number) {
   const divisor = 10 * n;

@@ -20,6 +20,7 @@
     "npm:@types/adm-zip@~0.5.7": "0.5.7",
     "npm:@types/geojson@^7946.0.16": "7946.0.16",
     "npm:@types/mapbox@^1.6.45": "1.6.45",
+    "npm:@types/mapbox__polyline@^1.0.5": "1.0.5",
     "npm:@types/node@^22.10.2": "22.19.3",
     "npm:@types/papaparse@^5.3.16": "5.5.2",
     "npm:@types/react-dom@^19.2.0": "19.2.3_@types+react@19.2.7",
@@ -2252,6 +2253,12 @@
     },
     "@types/mapbox__point-geometry@0.1.4": {
       "integrity": "sha512-mUWlSxAmYLfwnRBmgYV86tgYmMIICX4kza8YnE/eIlywGe2XoOxlpVnXWwir92xRLjwyarqwpu2EJKD2pk0IUA=="
+    },
+    "@types/mapbox__polyline@1.0.5": {
+      "integrity": "sha512-KNkXjtDPu3AgNbtikPyVqZEB5sF+Ls7sFtaZEgGEdU9YZUO5kF9nfDsJAWQqkBW8UVQNbq7Ob3Kube8l/b+3tQ==",
+      "dependencies": [
+        "@types/geojson"
+      ]
     },
     "@types/minimist@1.2.5": {
       "integrity": "sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag=="
@@ -5978,6 +5985,7 @@
         "npm:@types/adm-zip@~0.5.7",
         "npm:@types/geojson@^7946.0.16",
         "npm:@types/mapbox@^1.6.45",
+        "npm:@types/mapbox__polyline@^1.0.5",
         "npm:@types/node@^22.10.2",
         "npm:@types/papaparse@^5.3.16",
         "npm:@types/react-dom@^19.2.0",

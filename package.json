@@ -29,6 +29,7 @@
     "@types/adm-zip": "^0.5.7",
     "@types/geojson": "^7946.0.16",
     "@types/mapbox": "^1.6.45",
+    "@types/mapbox__polyline": "^1.0.5",
     "@types/papaparse": "^5.3.16",
     "@types/react-modal": "^3.16.3",
     "@vite-pwa/assets-generator": "^1.0.2",
