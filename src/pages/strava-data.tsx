@@ -206,7 +206,7 @@ export function Authorize() {
   const { data } = useQuery({
     queryKey: ["authUrl"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_BACKEND_URL}/auth-url`, {
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/#/auth-url`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
