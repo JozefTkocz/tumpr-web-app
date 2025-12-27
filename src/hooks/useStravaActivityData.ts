@@ -100,7 +100,7 @@ export function useStravaAuthToken() {
     key: "strava_auth_token",
   });
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["authToken", code],
     enabled: !token && code !== null,
     queryFn: async () => {
@@ -130,6 +130,7 @@ export function useStravaAuthToken() {
 
   return {
     token,
+    isLoading,
     clearToken,
   };
 }
