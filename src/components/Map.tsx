@@ -90,7 +90,7 @@ export function JourneyMap({
           type: "circle",
           source: "summit-points",
           paint: {
-            "circle-radius": 6,
+            "circle-radius": 9,
             "circle-color": "#bf0000",
           },
         });
@@ -126,7 +126,7 @@ export function JourneyMap({
           type: "circle",
           source: "visited-points",
           paint: {
-            "circle-radius": 6,
+            "circle-radius": 9,
             "circle-color": "#bfaf00",
           },
         });
