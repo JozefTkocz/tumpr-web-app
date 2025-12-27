@@ -98,6 +98,7 @@ export function JourneyMap({
         map.on("click", "summit-layer", (e) => {
           const feature = e.features?.[0];
 
+          // @ts-ignore I hate mapbox-gl
           const coordinates = feature?.geometry.coordinates.slice();
           const name = feature?.properties?.Name;
 
@@ -133,6 +134,7 @@ export function JourneyMap({
         map.on("click", "visited-layer", (e) => {
           const feature = e.features?.[0];
 
+          // @ts-ignore I hate mapbox-gl
           const coordinates = feature?.geometry.coordinates.slice();
           const name = feature?.properties?.Name;
 
