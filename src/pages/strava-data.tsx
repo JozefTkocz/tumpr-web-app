@@ -94,7 +94,11 @@ function ClearDataButton({ clearAll }: { clearAll: () => void }) {
 }
 
 export function StravaDataAuth() {
-  const { token, clearToken } = useStravaAuthToken();
+  const {
+    token,
+    clearToken,
+    isLoading: isLoadingAuthToken,
+  } = useStravaAuthToken();
   const {
     data,
     isLoading,
@@ -105,7 +109,7 @@ export function StravaDataAuth() {
     clearActivityCache();
     clearToken();
   };
-  if (isLoading) {
+  if (isLoading || isLoadingAuthToken) {
     return <DataLoadingSpinner text="please wait..." />;
   }
   if (!token && !data) {
