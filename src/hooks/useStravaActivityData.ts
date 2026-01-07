@@ -122,6 +122,7 @@ export function useStravaAuthToken() {
       )
         .then(async (r) => await r.text())
         .then((s) => JSON.parse(s) as { token: { access_token: string } });
+      setToken(newToken.token.access_token);
       return newToken.token.access_token;
     },
   });
@@ -130,7 +131,7 @@ export function useStravaAuthToken() {
     if (data) {
       setToken(data);
     }
-  }, [data, setToken, isLoading]);
+  });
 
   return {
     token,

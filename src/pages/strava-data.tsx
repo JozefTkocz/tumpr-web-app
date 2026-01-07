@@ -122,12 +122,12 @@ export function StravaDataAuth() {
     isLoading,
     clearAll: clearActivityCache,
   } = useStravaActivityHistory();
-  console.log(token, data, isLoading);
   const clearAll = () => {
     clearActivityCache();
     clearToken();
   };
-  if (isLoading || isLoadingAuthToken) {
+  console.log(isLoading, data?.length, token, isLoadingAuthToken);
+  if ((isLoading && token !== null) || isLoadingAuthToken) {
     return <DataLoadingSpinner text="please wait..." />;
   }
   if (!data) {
