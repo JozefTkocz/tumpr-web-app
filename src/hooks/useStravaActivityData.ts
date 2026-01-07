@@ -42,6 +42,7 @@ export function useStravaActivityHistory() {
   const {
     data: localData,
     isReady,
+    isConnecting,
     addObject,
     deleteObject,
   } = useIndexDbStore<{
