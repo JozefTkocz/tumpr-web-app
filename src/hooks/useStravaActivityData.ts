@@ -59,7 +59,10 @@ export function useStravaActivityHistory() {
   const { data: requestData, isLoading } = useQuery({
     queryKey: ["map-data", token],
     queryFn: () => queryStravaHistory(token),
-    enabled: isReady === true && token !== null && !hasLocalData,
+    enabled: isReady === true &&
+      isConnecting === false &&
+      token !== null &&
+      !hasLocalData,
   });
 
   useEffect(() => {
@@ -126,7 +129,7 @@ export function useStravaAuthToken() {
     if (data) {
       setToken(data);
     }
-  }, [data, setToken]);
+  }, [data, setToken, isLoading]);
 
   return {
     token,

@@ -45,7 +45,7 @@ export function StravaMap({
     return data.filter((d) => d.map?.summary_polyline);
   }, [data]);
 
-  const onClickMe = () => {
+  const onClickSync = () => {
     calculateVisitedHills();
     setShouldSync(true);
   };
@@ -56,8 +56,8 @@ export function StravaMap({
         <JourneyMap stravaData={dataWithTraces} />
       </div>
       <div className="controls">
-        <SyncButton isCalculating={isCalculating} onClick={onClickMe} />
-        <ClearDataButton clearAll={clearAll} />
+        <SyncButton isCalculating={isCalculating} onClick={onClickSync} />
+        <ClearDataButton clearAll={clearAll} disabled={isCalculating} />
       </div>
     </div>
   );
@@ -66,14 +66,21 @@ export function StravaMap({
 function SyncButton({
   isCalculating,
   onClick,
+  disabled = false,
 }: {
   isCalculating: boolean;
   onClick: () => void;
+  disabled?: boolean;
 }) {
   return (
     <>
       {!isCalculating && (
-        <Button variant="contained" onClick={onClick} fullWidth>
+        <Button
+          variant="contained"
+          onClick={onClick}
+          fullWidth
+          disabled={disabled}
+        >
           Sync Strava data
         </Button>
       )}
@@ -85,9 +92,20 @@ function SyncButton({
   );
 }
 
-function ClearDataButton({ clearAll }: { clearAll: () => void }) {
+function ClearDataButton({
+  clearAll,
+  disabled = false,
+}: {
+  clearAll: () => void;
+  disabled?: boolean;
+}) {
   return (
-    <Button variant="contained" onClick={clearAll} fullWidth>
+    <Button
+      variant="contained"
+      onClick={clearAll}
+      fullWidth
+      disabled={disabled}
+    >
       Clear Strava Data
     </Button>
   );
@@ -112,13 +130,10 @@ export function StravaDataAuth() {
   if (isLoading || isLoadingAuthToken) {
     return <DataLoadingSpinner text="please wait..." />;
   }
-  if (!token && !data) {
+  if (!data) {
     return <Authorize />;
   }
 
-  if (!data) {
-    return <DataLoadingSpinner text="please wait, fetching..." />;
-  }
   // We should now be authorized, so load the map
   return <StravaMap data={data} clearAll={clearAll} />;
 }

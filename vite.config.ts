@@ -17,6 +17,9 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,csv}'],
+      },
       strategies: 'generateSW',
       devOptions: {
         enabled: true,
@@ -27,7 +30,7 @@ export default defineConfig({
         'pwa-192x192.png',
         'pwa-512x512.png',
         'maskable-icon-512x512.png',
-        'public/data/DoBIH_v18_3.csv',
+        'data/DoBIH_v18_3.csv',
       ],
       manifestFilename: 'manifest.json',
       manifest: {
