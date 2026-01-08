@@ -122,16 +122,13 @@ export function useStravaAuthToken() {
       )
         .then(async (r) => await r.text())
         .then((s) => JSON.parse(s) as { token: { access_token: string } });
-      setToken(newToken.token.access_token);
       return newToken.token.access_token;
     },
   });
 
-  useEffect(() => {
-    if (data) {
-      setToken(data);
-    }
-  });
+  if (data) {
+    setToken(data);
+  }
 
   return {
     token,
