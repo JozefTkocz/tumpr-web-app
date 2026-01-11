@@ -128,8 +128,11 @@ export function HillCardModel({
         maxWidth="400px"
         width="100%"
       >
+        <Box fontWeight="bold">Name:</Box>
+        <Box>{hill.Name}</Box>
+
         <Box fontWeight="bold">Height:</Box>
-        <Box>{roundToDecimalPlaces(hill.Metres, 1)}</Box>
+        <Box>{roundToDecimalPlaces(hill.Metres, 1)} m</Box>
 
         <Box fontWeight="bold">Summit Features:</Box>
         <Box>{hill.Feature}</Box>
@@ -138,19 +141,20 @@ export function HillCardModel({
         <Box>{hill.Observations || "no observations"}</Box>
 
         <Box fontWeight="bold">Prominence:</Box>
-        <Box>{roundToDecimalPlaces(hill.Drop, 1)}</Box>
+        <Box>{roundToDecimalPlaces(hill.Drop, 1)} m</Box>
 
         <Box fontWeight="bold">Classification Codes:</Box>
         <Box>{hill.Classification}</Box>
 
-        <Box fontWeight="bold">Distance:</Box>
-        <Box>{roundToDecimalPlaces(hill.distance, 1)}</Box>
+        {hill.distance && <Box fontWeight="bold">Distance:</Box>}
+        {hill.distance && <Box>{roundToDecimalPlaces(hill.distance, 1)} m</Box>}
 
-        <Box fontWeight="bold">Bearing:</Box>
-        <Box>{roundToDecimalPlaces(hill.bearing, 1)}</Box>
+        {hill.bearing && <Box fontWeight="bold">Bearing:</Box>}
+        {hill.bearing && <Box>{roundToDecimalPlaces(hill.bearing, 1)} &deg
+        </Box>}
 
-        <Box fontWeight="bold">Direction:</Box>
-        <Box>{getCardinalDirection(hill.bearing)}</Box>
+        {hill.bearing && <Box fontWeight="bold">Direction:</Box>}
+        {hill.bearing && <Box>{getCardinalDirection(hill.bearing)}</Box>}
 
         <Box>
           <Switch
