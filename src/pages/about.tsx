@@ -12,7 +12,11 @@ import "./strava-data.css";
 
 export function About() {
   const [hillClassification, setHillClassification] = useState("Tu");
-  const { data, isLoading: isBaggedDataLoading } = useBaggedStatus();
+  const {
+    data,
+    isLoading: isBaggedDataLoading,
+    addIsBaggedPropertyToHill,
+  } = useBaggedStatus();
   const { data: hills, isLoading: isHillsDbLoading } = useLoadHillsDatabase();
   const { data: stravaData } = useStravaActivityHistory();
 
@@ -35,9 +39,9 @@ export function About() {
 
   const hillIds = data?.map((d) => d.id);
 
-  const hillsOfClassification = hills.filter(
-    (h) => h[hillClassification] === "1",
-  );
+  const hillsOfClassification = hills
+    .filter((h) => h[hillClassification] === "1")
+    .map(addIsBaggedPropertyToHill) as Array<Hill>;
 
   const visitedHills = hillsOfClassification.filter((h) =>
     hillIds?.includes(h.Number)

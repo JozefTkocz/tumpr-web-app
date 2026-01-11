@@ -128,6 +128,7 @@ export function useStravaAuthToken() {
 
   if (data) {
     setToken(data);
+    return { token: data, isLoading, clearToken };
   }
 
   return {

@@ -1,10 +1,47 @@
 import polyline from "@mapbox/polyline";
 import mapboxgl from "mapbox-gl";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import Modal from "react-modal";
+import { useBaggedStatus } from "../hooks/baggedStatus.ts";
+import { HillCardModel } from "./HillListItem.tsx";
 import type { Feature, FeatureCollection, LineString, Point } from "geojson";
 import type { SummaryActivity } from "../strava/Api.ts";
 import type { Hill } from "../hooks/useHillData.tsx";
 import "mapbox-gl/dist/mapbox-gl.css";
+
+function HillModal({
+  hill,
+  setIsBagged,
+  unSelectHill,
+}: {
+  hill: Hill;
+  setIsBagged: (arg: boolean) => void;
+  unSelectHill: () => void;
+}) {
+  return (
+    <Modal
+      isOpen
+      onRequestClose={() => {
+        unSelectHill();
+      }}
+      style={{
+        content: {
+          maxWidth: "500px", // desktop max width
+          width: "90%", // mobile width (and fallback)
+          margin: "0 auto", // center horizontally
+          inset: "50% auto auto 50%",
+          transform: "translate(-50%, -50%)", // center vertically
+        },
+      }}
+    >
+      <HillCardModel
+        hill={hill}
+        onClose={() => unSelectHill()}
+        setIsBagged={setIsBagged}
+      />
+    </Modal>
+  );
+}
 
 export function JourneyMap({
   stravaData,
@@ -17,6 +54,20 @@ export function JourneyMap({
 }) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null); // to prevent duplicate map instances
+  const [selectedHill, setSelectedHill] = useState<Hill | null>(null);
+  const { markAsBagged, markAsNotBagged } = useBaggedStatus();
+
+  const buildIsBaggedFunction = (hill: Hill) => {
+    const isBaggedFunction = (arg: boolean) => {
+      if (arg) {
+        markAsBagged(hill);
+        return;
+      }
+      markAsNotBagged(hill);
+      return;
+    };
+    return isBaggedFunction;
+  };
 
   useEffect(() => {
     mapRef.current?.resize();
@@ -97,15 +148,7 @@ export function JourneyMap({
 
         map.on("click", "summit-layer", (e) => {
           const feature = e.features?.[0];
-
-          // @ts-ignore I hate mapbox-gl
-          const coordinates = feature?.geometry.coordinates.slice();
-          const name = feature?.properties?.Name;
-
-          new mapboxgl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(`<strong>${name}</strong>`)
-            .addTo(map);
+          setSelectedHill(feature?.properties as Hill);
         });
         map.on("mouseenter", "summit-layer", () => {
           map.getCanvas().style.cursor = "pointer";
@@ -133,15 +176,7 @@ export function JourneyMap({
 
         map.on("click", "visited-layer", (e) => {
           const feature = e.features?.[0];
-
-          // @ts-ignore I hate mapbox-gl
-          const coordinates = feature?.geometry.coordinates.slice();
-          const name = feature?.properties?.Name;
-
-          new mapboxgl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(`<strong>${name}</strong>`)
-            .addTo(map);
+          setSelectedHill(feature?.properties as Hill);
         });
         map.on("mouseenter", "visited-layer", () => {
           map.getCanvas().style.cursor = "pointer";
@@ -158,7 +193,18 @@ export function JourneyMap({
     };
   }, [stravaData, summits]);
 
-  return <div ref={mapContainer} className="map" />;
+  return (
+    <>
+      <div ref={mapContainer} className="map"></div>
+      {selectedHill && (
+        <HillModal
+          hill={selectedHill}
+          setIsBagged={buildIsBaggedFunction(selectedHill)}
+          unSelectHill={() => setSelectedHill(null)}
+        />
+      )}
+    </>
+  );
 }
 
 function hillToGeoJson(coords: Array<Hill>): FeatureCollection<Point> {

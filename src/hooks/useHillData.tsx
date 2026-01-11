@@ -137,12 +137,8 @@ export function useHillData({
   const { data, isLoading } = useLoadHillsDatabase();
 
   // Load in a list of hill IDs that have been bagged from indexedDB
-  const {
-    data: baggedIds,
-    markAsBagged,
-    markAsNotBagged,
-    canEdit,
-  } = useBaggedStatus();
+  const { markAsBagged, markAsNotBagged, canEdit, addIsBaggedPropertyToHill } =
+    useBaggedStatus();
 
   // Filter out only the hills that have the relevant classification
   const hillsOfClassification = data?.filter((d) => d[classification] === "1");
@@ -188,11 +184,9 @@ export function useHillData({
 
   // This must be calculated first so the check for already-bagged
   // hills works as intended below
-  const final = nearestHillsWithBearings?.map((h) =>
-    baggedIds?.map((b) => b.id).includes(h.Number)
-      ? { ...h, isBagged: true }
-      : { ...h, isBagged: false }
-  ) as Array<Hill> | undefined;
+  const final = nearestHillsWithBearings?.map(addIsBaggedPropertyToHill) as
+    | Array<Hill>
+    | undefined;
 
   // if we are within 20m of any of the nearby hills, auto-update the
   // bagged hills database.

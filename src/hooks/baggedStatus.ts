@@ -33,6 +33,11 @@ export function useBaggedStatus() {
     addMany(hillIds);
   };
 
+  const addIsBaggedPropertyToHill = (hill: Hill) =>
+    data?.map((b) => b.id).includes(hill.Number)
+      ? { ...hill, isBagged: true }
+      : { ...hill, isBagged: false };
+
   return {
     data,
     isLoading,
@@ -41,5 +46,6 @@ export function useBaggedStatus() {
     markAsBagged,
     markAsNotBagged,
     bulkMarkAsBagged,
+    addIsBaggedPropertyToHill,
   };
 }
