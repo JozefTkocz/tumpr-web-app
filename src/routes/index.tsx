@@ -1,10 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { HillsPage } from '@/pages/tumps'
+import { createFileRoute } from "@tanstack/react-router";
+import { HillsPage } from "../pages/tumps.tsx";
+import { loadHillsDatabase } from "../hooks/useHillData.tsx";
 
-export const Route = createFileRoute('/')({
-  component: App,
-})
-
-function App() {
-  return <HillsPage />
-}
+export const Route = createFileRoute("/")({
+  component: HillsPage,
+  // deno-lint-ignore no-explicit-any
+  loader: ({ context }: { context: any }) =>
+    context.queryClient.ensureQueryData({
+      queryKey: ["database"],
+      queryFn: loadHillsDatabase,
+    }),
+});

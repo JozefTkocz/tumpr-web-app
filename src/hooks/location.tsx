@@ -1,26 +1,50 @@
-import { useState } from 'react'
+import { useEffect, useState } from "react";
 
 export type Coordinate = {
-  latitude: number
-  longitude: number
-  altitude: number | null
-}
+  latitude: number;
+  longitude: number;
+  altitude: number | null;
+};
 
-export function useLocation() {
-  const [location, setLocation] = useState<Coordinate>()
+export function useLocation(): {
+  location: Coordinate | undefined;
+  id: number;
+  hasPermission: boolean;
+} {
+  const cachedLocationString = globalThis.sessionStorage.getItem("location");
+  const cachedLocation = cachedLocationString
+    ? (JSON.parse(cachedLocationString) as Coordinate)
+    : undefined;
+  const [location, setLocation] = useState<Coordinate | undefined>(
+    cachedLocation,
+  );
+  const [hasPermission, setHasPermission] = useState(false);
+
+  useEffect(() => {
+    navigator.permissions.query({ name: "geolocation" }).then((result) => {
+      result.state === "denied"
+        ? setHasPermission(false)
+        : setHasPermission(true);
+    });
+  });
+
+  const setLocationAndUpdateCache = (coordinate: Coordinate) => {
+    setLocation(coordinate);
+    globalThis.sessionStorage.setItem("location", JSON.stringify(coordinate));
+  };
 
   const id = navigator.geolocation.watchPosition(
     (pos) =>
-      setLocation({
+      setLocationAndUpdateCache({
         longitude: pos.coords.longitude,
         latitude: pos.coords.latitude,
         altitude: pos.coords.altitude,
       }),
     (err) => {
-      console.log(err)
+      console.log(err);
     },
     { enableHighAccuracy: true },
-  )
+  );
 
-  return { location, id }
+  return { location, id, hasPermission };
 }

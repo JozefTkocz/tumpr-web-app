@@ -1,27 +1,34 @@
-import { useState } from 'react'
-import { Box, Button } from '@mui/material'
-import Modal from 'react-modal'
-import { X } from 'lucide-react'
-import type { Hill } from '@/pages/tumps'
+import { useState } from "react";
+import { Box, Button, Switch } from "@mui/material";
+import Modal from "react-modal";
+import { X } from "lucide-react";
+import type { Hill } from "../hooks/useHillData.tsx";
 
 function roundToDecimalPlaces(arg: number, n: number) {
-  const divisor = 10 * n
-  return Math.round(arg * divisor) / divisor
+  const divisor = 10 * n;
+  return Math.round(arg * divisor) / divisor;
 }
 
-export function HillListItem({ hill }: { hill: Hill }) {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+export function HillListItem({
+  hill,
+  setIsBagged,
+}: {
+  hill: Hill;
+  isBagged: boolean;
+  setIsBagged: (arg: boolean) => void;
+}) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
       <Button
         onClick={() => setIsModalOpen(!isModalOpen)}
         sx={{
-          justifyContent: 'center', // aligns text left like a list item
-          width: '100%',
-          textTransform: 'none', // disables uppercase
-          color: 'text.primary', // nice neutral color
-          backgroundColor: 'background.paper',
+          justifyContent: "center", // aligns text left like a list item
+          width: "100%",
+          textTransform: "none", // disables uppercase
+          color: "text.primary", // nice neutral color
+          backgroundColor: hill.isBagged ? "green" : "background.paper",
           borderRadius: 2, // rounded corners
           paddingY: 1.5, // vertical padding
           paddingX: 2, // horizontal padding
@@ -36,70 +43,76 @@ export function HillListItem({ hill }: { hill: Hill }) {
         onRequestClose={() => setIsModalOpen(false)}
         style={{
           content: {
-            maxWidth: '500px', // desktop max width
-            width: '90%', // mobile width (and fallback)
-            margin: '0 auto', // center horizontally
-            inset: '50% auto auto 50%',
-            transform: 'translate(-50%, -50%)', // center vertically
+            maxWidth: "500px", // desktop max width
+            width: "90%", // mobile width (and fallback)
+            margin: "0 auto", // center horizontally
+            inset: "50% auto auto 50%",
+            transform: "translate(-50%, -50%)", // center vertically
           },
         }}
       >
-        <HillCardModel hill={hill} onClose={() => setIsModalOpen(false)} />
+        <HillCardModel
+          hill={hill}
+          onClose={() => setIsModalOpen(false)}
+          setIsBagged={setIsBagged}
+        />
       </Modal>
     </>
-  )
+  );
 }
 
 function getCardinalDirection(bearing: number): string {
   if (bearing >= 0 && bearing < 22.5) {
-    return 'N'
+    return "N";
   } else if (bearing === 22.5) {
-    return 'NNE'
+    return "NNE";
   } else if (bearing > 22.5 && bearing < 67.5) {
-    return 'NE'
+    return "NE";
   } else if (bearing === 67.5) {
-    return 'ENE'
+    return "ENE";
   } else if (bearing > 67.5 && bearing < 112.5) {
-    return 'E'
+    return "E";
   } else if (bearing === 112.5) {
-    return 'ESE'
+    return "ESE";
   } else if (bearing > 112.5 && bearing < 157.5) {
-    return 'SE'
+    return "SE";
   } else if (bearing === 157.5) {
-    return 'SSE'
+    return "SSE";
   } else if (bearing > 157.5 && bearing < 202.5) {
-    return 'S'
+    return "S";
   } else if (bearing === 202.5) {
-    return 'SSW'
+    return "SSW";
   } else if (bearing > 202.5 && bearing < 247.5) {
-    return 'SW'
+    return "SW";
   } else if (bearing === 247.5) {
-    return 'WSW'
+    return "WSW";
   } else if (bearing > 247.5 && bearing < 292.5) {
-    return 'W'
+    return "W";
   } else if (bearing === 292.5) {
-    return 'WNW'
+    return "WNW";
   } else if (bearing > 292.5 && bearing < 337.5) {
-    return 'NW'
+    return "NW";
   } else if (bearing === 337.5) {
-    return 'NNW'
+    return "NNW";
   } else if (bearing > 337.5 && bearing < 360) {
-    return 'N'
+    return "N";
   } else {
-    return 'undefined'
+    return "undefined";
   }
 }
 
 export function HillCardModel({
   hill,
   onClose,
+  setIsBagged,
 }: {
-  hill: Hill
-  onClose: () => void
+  hill: Hill;
+  onClose: () => void;
+  setIsBagged: (arg: boolean) => void;
 }) {
   return (
-    <Box display={'flex'} flexDirection={'column'}>
-      <Box display={'flex'} flexDirection={'row'} justifyContent="flex-end">
+    <Box display="flex" flexDirection="column">
+      <Box display="flex" flexDirection="row" justifyContent="flex-end">
         <Button onClick={onClose}>
           <X size={24}></X>
         </Button>
@@ -115,30 +128,44 @@ export function HillCardModel({
         maxWidth="400px"
         width="100%"
       >
+        <Box fontWeight="bold">Name:</Box>
+        <Box>{hill.Name}</Box>
+
         <Box fontWeight="bold">Height:</Box>
-        <Box>{roundToDecimalPlaces(hill.Metres, 1)}</Box>
+        <Box>{roundToDecimalPlaces(hill.Metres, 1)} m</Box>
 
         <Box fontWeight="bold">Summit Features:</Box>
         <Box>{hill.Feature}</Box>
 
         <Box fontWeight="bold">Observations:</Box>
-        <Box>{hill.Observations || 'no observations'}</Box>
+        <Box>{hill.Observations || "no observations"}</Box>
 
         <Box fontWeight="bold">Prominence:</Box>
-        <Box>{roundToDecimalPlaces(hill.Drop, 1)}</Box>
+        <Box>{roundToDecimalPlaces(hill.Drop, 1)} m</Box>
 
         <Box fontWeight="bold">Classification Codes:</Box>
         <Box>{hill.Classification}</Box>
 
-        <Box fontWeight="bold">Distance:</Box>
-        <Box>{roundToDecimalPlaces(hill.distance, 1)}</Box>
+        {hill.distance && <Box fontWeight="bold">Distance:</Box>}
+        {hill.distance && <Box>{roundToDecimalPlaces(hill.distance, 1)} m</Box>}
 
-        <Box fontWeight="bold">Bearing:</Box>
-        <Box>{roundToDecimalPlaces(hill.bearing, 1)}</Box>
+        {hill.bearing && <Box fontWeight="bold">Bearing:</Box>}
+        {hill.bearing && <Box>{roundToDecimalPlaces(hill.bearing, 1)} &deg
+        </Box>}
 
-        <Box fontWeight="bold">Direction:</Box>
-        <Box>{getCardinalDirection(hill.bearing)}</Box>
+        {hill.bearing && <Box fontWeight="bold">Direction:</Box>}
+        {hill.bearing && <Box>{getCardinalDirection(hill.bearing)}</Box>}
+
+        <Box>
+          <Switch
+            checked={hill.isBagged}
+            onChange={() => setIsBagged(!hill.isBagged)}
+          />
+          {hill.isBagged
+            ? "You have bagged this hill"
+            : "You have not bagged this hill"}
+        </Box>
       </Box>
     </Box>
-  )
+  );
 }
